@@ -43,3 +43,6 @@ value = 'value'
 #
 # --- ADD MORE NONTERMINALS HERE IF NEEDED IN QUESTION 4
 #
+
+obj_right = 'obj_right'
+members_right = 'members_right'
