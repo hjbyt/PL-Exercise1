@@ -226,7 +226,7 @@ grammar_json_4c = [
     (obj_right, (members, RB,)),
     (members, (keyvalue, members_right)),
     (members_right, ()),
-    (members_right, (COMMA, members_right)),
+    (members_right, (COMMA, members)),
     (keyvalue, (STRING, COLON, value)),
     (value, (STRING,)),
     (value, (INT,)),
