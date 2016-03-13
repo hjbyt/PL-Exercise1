@@ -155,9 +155,16 @@ def main():
     open('json_example.gv', 'w').write(dot)
     view(dot)
 
-    #
-    # --- MODIFY HERE TO ADD MORE TEST CASES ---
-    #
+    json_bad_example = open('json_bad_example.json').read()
+    print json_bad_example
+    tokens = lex(json_bad_example)
+    parser = JsonParser(tokens)
+    try:
+        parser.parse()
+    except SyntaxError, e:
+        print e
+    else:
+        print "Error: expected syntax error in bad example wasn't raised."
 
 
 if __name__ == '__main__':
