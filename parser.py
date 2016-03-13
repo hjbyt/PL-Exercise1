@@ -138,6 +138,46 @@ class JsonParser(Parser):
         elif self.t in [LB]:
             c1 = self.parse_obj()
             return (value, (c1,))
+        elif self.t in [LS]:
+            c1 = self.parse_array()
+            return (value, (c1,))
+        else:
+            raise SyntaxError("Syntax error: no rule for token: {}".format(self.t))
+
+    def parse_array(self):
+        if self.t in [LS]:
+            c1 = self.match(LS)
+            c2 = self.parse_array_right()
+            return (array, (c1, c2))
+        else:
+            raise SyntaxError("Syntax error: no rule for token: {}".format(self.t))
+
+    def parse_array_right(self):
+        if self.t in [RS]:
+            c1 = self.match(RS)
+            return (array_right, (c1,))
+        elif self.t in [INT, LB, STRING, LS]:
+            c1 = self.parse_array_members()
+            c2 = self.match(RS)
+            return (array_right, (c1, c2))
+        else:
+            raise SyntaxError("Syntax error: no rule for token: {}".format(self.t))
+
+    def parse_array_members(self):
+        if self.t in [INT, LB, STRING, LS]:
+            c1 = self.parse_value()
+            c2 = self.parse_array_members_right()
+            return (array_members, (c1, c2))
+        else:
+            raise SyntaxError("Syntax error: no rule for token: {}".format(self.t))
+
+    def parse_array_members_right(self):
+        if self.t in [RS]:
+            return (array_members_right, ())
+        elif self.t in [COMMA]:
+            c1 = self.match(COMMA)
+            c2 = self.parse_array_members()
+            return (array_members_right, (c1, c2))
         else:
             raise SyntaxError("Syntax error: no rule for token: {}".format(self.t))
 
