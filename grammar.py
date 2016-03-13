@@ -199,9 +199,14 @@ def analyze_grammar(grammar):
 
 
 grammar_json_4a = [
-    #
-    # --- FILL IN HERE IN QUESTION 4.a ---
-    #
+    (obj, (LB, RB)),
+    (obj, (LB, members, RB)),
+    (members, (keyvalue,)),
+    (members, (members, COMMA, members)),
+    (keyvalue, (STRING, COLON, value)),
+    (value, (STRING,)),
+    (value, (INT,)),
+    (value, (obj,)),
 ]
 
 grammar_json_4b = [
@@ -231,8 +236,8 @@ def main():
     #
     # --- UNCOMMENT THE FOLLOWING LINES AS YOU PROCEED ---
     #
-    # analyze_grammar(grammar_json_4a)
-    # print
+    analyze_grammar(grammar_json_4a)
+    print
     # analyze_grammar(grammar_json_4b)
     # print
     # analyze_grammar(grammar_json_4c)
