@@ -4,7 +4,8 @@
         "two",
         {
             "object inside array?":"yes",
-            "empty array":[]
+            "empty array":[],
+            "nested array": [[[], [], {}]]
         }
     ]
 }
