@@ -195,6 +195,8 @@ def main():
     open('json_example.gv', 'w').write(dot)
     view(dot)
 
+    print "\n*************************************"
+    print "Bad Example:\n"
     json_bad_example = open('json_bad_example.json').read()
     print json_bad_example
     tokens = lex(json_bad_example)
@@ -205,6 +207,17 @@ def main():
         print e
     else:
         print "Error: expected syntax error in bad example wasn't raised."
+
+    print "\n*************************************"
+    print "Array Example:\n"
+    json_array_example = open('json_array_example.json').read()
+    print json_array_example
+    tokens = lex(json_array_example)
+    parser = JsonParser(tokens)
+    parse_tree = parser.parse()
+    dot = tree_to_dot(parse_tree)
+    open('json_array_example.gv', 'w').write(dot)
+    #view(dot)
 
 
 if __name__ == '__main__':
