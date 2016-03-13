@@ -46,3 +46,7 @@ value = 'value'
 
 obj_right = 'obj_right'
 members_right = 'members_right'
+array = 'array'
+array_right = 'array_right'
+array_members = 'array_members'
+array_members_right = 'array_members_right'
