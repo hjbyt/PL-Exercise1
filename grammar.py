@@ -60,10 +60,12 @@ def calculate_first(terminals, nonterminals, grammar, nullable):
     while changing:
         changing = False
         for head, body in grammar:
-            #
-            # --- FILL IN HERE IN QUESTION 1 ---
-            #
-            pass
+            for symbol in body:
+                if not (first[symbol] <= first[head]):
+                    first[head].update(first[symbol])
+                    changing = True
+                if symbol not in nullable:
+                    break
     return first
 
 
@@ -76,9 +78,31 @@ def calculate_follow(terminals, nonterminals, grammar, nullable, first):
         follow[a] = set()
     start_nonterminal = grammar[0][0]
     follow[start_nonterminal] = {EOF}
-    #
-    # --- FILL IN HERE IN QUESTION 1 ---
-    #
+    changing = True
+    while changing:
+        changing = False
+        for head, body in grammar:
+            for symbol in reversed(body):
+                if symbol in terminals:
+                    break
+                if not(follow[head] <= follow[symbol]):
+                    follow[symbol].update(follow[head])
+                    changing = True
+                if symbol not in nullable:
+                    break
+            i = len(body) - 1
+            while i > 0:
+                firsts = set(first[body[i]])
+                i -= 1
+                while i >= 0:
+                    if body[i] not in terminals and not (firsts <= follow[body[i]]):
+                        follow[body[i]].update(firsts)
+                        changing = True
+                    if body[i] in nullable:
+                        firsts.update(first[body[i]])
+                        i -= 1
+                    else:
+                        break
     return follow
 
 
@@ -87,9 +111,16 @@ def calculate_select(terminals, nonterminals, grammar, nullable, first, follow):
     Return a dictionary mapping rules to their SELECT (a.k.a. PREDICT) set
     """
     select = dict()
-    #
-    # --- FILL IN HERE IN QUESTION 1 ---
-    #
+    for rule in grammar:
+        head, body = rule
+        firsts = set()
+        for symbol in body:
+            firsts.update(first[symbol])
+            if symbol not in nullable:
+                break
+        select[rule] = firsts
+        if all(symbol in nullable for symbol in body):
+            select[rule].update(follow[head])
     return select
 
 
