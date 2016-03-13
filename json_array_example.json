@@ -1,12 +1,10 @@
 {
-   "array":[
-      1,
-      "two",
-      {
-         "object inside array?":"yes",
-         "empty array":[
-
-         ]
-      }
-   ]
+    "array":[
+        1,
+        "two",
+        {
+            "object inside array?":"yes",
+            "empty array":[]
+        }
+    ]
 }
